@@ -33,6 +33,7 @@ def sign_up_through_ui(app: App, user: dict) -> None:
 
 def verify_logged_in_as(app: App, name: str) -> None:
     """'Verify that Logged in as username is visible'"""
+    assert app.nav.logged_in_as.is_visible()
     logged_in_text = app.nav.logged_in_as.inner_text()
     assert name in logged_in_text, f"Expected '{name}' in '{logged_in_text}'"
 
