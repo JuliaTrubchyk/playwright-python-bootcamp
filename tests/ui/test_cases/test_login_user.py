@@ -1,7 +1,10 @@
-"""Test Case 2: Login user with correct email and password. """
-"""Test Case 3.1: Login user with incorrect email and correct password."""
-"""Test Case 3.2: Login user with valid email and incorrect password."""
-"""See https://automationexercise.com/test_cases"""
+"""Test Cases 2 and 3: Login flows.
+
+- TC02: Login user with correct email and password.
+- TC03.1: Login user with incorrect email and correct password.
+- TC03.2: Login user with valid email and incorrect password.
+See https://automationexercise.com/test_cases
+"""
 
 import pytest
 

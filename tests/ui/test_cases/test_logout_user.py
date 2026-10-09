@@ -1,5 +1,7 @@
-"""Test Case 4: Valid user can logout."""
-"""See https://automationexercise.com/test_cases"""
+"""Test Case 4: Valid user can logout.
+
+See https://automationexercise.com/test_cases
+"""
 
 import pytest
 
