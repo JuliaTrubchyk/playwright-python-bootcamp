@@ -47,7 +47,7 @@ def app(page) -> App:
     """Every page object in one place. Opens nothing. Used by the numbered test cases."""
     return App(page)
 
-
+# generates user data but does not register the account  
 @pytest.fixture
 def signup_user(account_api):
     """Unique user data for tests that register through the browser.

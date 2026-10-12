@@ -10,7 +10,7 @@ class ContactPage(BasePage):
 
     @property
     def heading(self) -> Locator:
-        return self.page.locator(".contact-form h2")
+        return self.page.get_by_role("heading", name="Get In Touch")
 
     @property
     def success_message(self) -> Locator:
