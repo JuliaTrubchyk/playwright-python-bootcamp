@@ -1,4 +1,6 @@
-"""Test Case 1: Register User. See https://automationexercise.com/test_cases"""
+"""Test Case 1: Register User"""
+"""Test Case 5: Register User with existing email"""
+"""See https://automationexercise.com/test_cases"""
 
 import re
 
@@ -27,3 +29,17 @@ def test_tc01_register_user(app, signup_user):
     app.account.continue_button.click()                       # 15
     verify_logged_in_as(app, signup_user["name"])             # 16
     delete_account_through_ui(app)                            # 17-18
+
+def test_tc05_register_user_with_existing_email(app, new_user):
+    # Launch browser and open the site
+    app.home.open()                           
+    # Verify Home Page is visible                
+    verify_home_page_visible(app)                             
+    # Click on Signup/Login button
+    app.nav.login_link.click()                               
+    # Verify "New User Signup!" heading is visible
+    assert app.login.signup_heading.inner_text() == "New User Signup!"    
+    # Enter name an already registered email address
+    app.login.start_signup(new_user["name"], new_user["email"])
+    # Verify "Email Address already exist!" message is displayed
+    assert app.login.signup_error.is_visible() 
