@@ -1,6 +1,9 @@
-"""Test Case 1: Register User"""
-"""Test Case 5: Register User with existing email"""
-"""See https://automationexercise.com/test_cases"""
+"""Test Cases 1 and 5: Register user flows.
+
+- TC01: Register user successfully.
+- TC05: Register user with an existing email.
+See https://automationexercise.com/test_cases
+"""
 
 import re
 
@@ -29,6 +32,7 @@ def test_tc01_register_user(app, signup_user):
     app.account.continue_button.click()                       # 15
     verify_logged_in_as(app, signup_user["name"])             # 16
     delete_account_through_ui(app)                            # 17-18
+
 
 def test_tc05_register_user_with_existing_email(app, new_user):
     # Launch browser and open the site
