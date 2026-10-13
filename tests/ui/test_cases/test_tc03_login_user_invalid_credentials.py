@@ -7,9 +7,7 @@ See https://automationexercise.com/test_cases
 
 import pytest
 
-from tests.ui.test_cases.steps import (
-    verify_home_page_visible
-)
+from tests.ui.test_cases.steps import verify_home_page_visible
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
 
