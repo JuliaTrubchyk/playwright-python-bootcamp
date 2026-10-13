@@ -3,8 +3,6 @@
 See https://automationexercise.com/test_cases
 """
 
-import re
-
 import pytest
 
 from tests.ui.test_cases.steps import verify_home_page_visible

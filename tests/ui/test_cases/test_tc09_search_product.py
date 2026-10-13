@@ -3,17 +3,12 @@
 See https://automationexercise.com/test_cases
 """
 
-import re
-
 import pytest
 
-from tests.ui.test_cases.steps import (
-    delete_account_through_ui,
-    verify_home_page_visible,
-    verify_logged_in_as,
-)
+from tests.ui.test_cases.steps import verify_home_page_visible
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
+
 
 def test_tc09_search_product(app):
     app.home.open()
