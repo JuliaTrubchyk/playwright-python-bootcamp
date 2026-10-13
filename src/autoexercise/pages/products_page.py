@@ -7,6 +7,10 @@ class ProductsPage(BasePage):
     path = "/products"
 
     @property
+    def heading(self) -> Locator:
+        return self.page.get_by_role("heading", name="All Products")
+
+    @property
     def cards(self) -> Locator:
         return self.page.locator(".features_items .product-image-wrapper")
 
