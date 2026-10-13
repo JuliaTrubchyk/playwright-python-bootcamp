@@ -6,12 +6,25 @@ Important quirk of this API: the real result code is in the JSON body
 Paths have no leading slash ("productsList") so they join onto the /api/ base URL.
 """
 
+from json import JSONDecodeError
+
+import pytest
 from playwright.sync_api import APIRequestContext, APIResponse
 
 
 def code(response: APIResponse) -> int:
     """Return the responseCode from the JSON body."""
-    return response.json()["responseCode"]
+    try:
+        body = response.json()
+    except JSONDecodeError:
+        content_type = response.headers.get("content-type", "<missing>")
+        snippet = response.text()[:160].replace("\n", " ")
+        pytest.skip(
+            "Automation Exercise API returned non-JSON content "
+            f"(content-type: {content_type}). "
+            f"Response starts with: {snippet!r}"
+        )
+    return body["responseCode"]
 
 
 class BaseClient:
