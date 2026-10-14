@@ -12,6 +12,7 @@ from tests.ui.test_cases.steps import (
     sign_up_through_ui,
     verify_home_page_visible,
     verify_logged_in_as,
+    verify_address_and_review
 )
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
@@ -43,27 +44,8 @@ def test_tc15_place_order_register_before_checkout(app, signup_user):
 
     app.cart.proceed_to_checkout()
 
-    # Step 12: Verify Address Details
-    delivery = app.checkout.delivery_address
-    billing = app.checkout.billing_address
-
-    assert delivery.is_visible()
-    assert billing.is_visible()
-
-    for address in [delivery, billing]:
-        assert signup_user["firstname"] in address.inner_text()
-        assert signup_user["lastname"] in address.inner_text()
-        assert signup_user["address1"] in address.inner_text()
-        assert signup_user["address2"] in address.inner_text()
-        assert signup_user["city"] in address.inner_text()
-        assert signup_user["state"] in address.inner_text()
-        assert signup_user["zipcode"] in address.inner_text()
-        assert signup_user["country"] in address.inner_text()
-        assert signup_user["mobile_number"] in address.inner_text()
-
-    # Verify Review Your Order
-    assert app.checkout.order_review.is_visible()
-    assert product_name in app.checkout.order_review.inner_text()
+    # Step 12: Verify address details and order review
+    verify_address_and_review(app, signup_user, product_name)
 
     # Steps 13–15: Place order, pay, and verify confirmation
     place_order_and_pay(app, card, "Test comment")

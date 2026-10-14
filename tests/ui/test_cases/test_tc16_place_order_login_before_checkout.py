@@ -11,6 +11,7 @@ from tests.ui.test_cases.steps import (
     place_order_and_pay,
     verify_home_page_visible,
     verify_logged_in_as,
+    verify_address_and_review
 )
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
@@ -25,6 +26,7 @@ card = {
 
 
 def test_tc16_place_order_login_before_checkout(app, new_user):
+    # Steps 1–3: Open and verify homepage
     app.home.open()
     verify_home_page_visible(app)
 
@@ -39,31 +41,14 @@ def test_tc16_place_order_login_before_checkout(app, new_user):
     product_name = app.home.featured_items.first.locator(".productinfo p").inner_text()
     app.home.add_card_to_cart(app.home.featured_items.first)
     app.home.view_cart_from_modal()
+
     assert app.page.url.endswith("/view_cart")    
+    assert product_name in app.cart.item_names.first.inner_text()
 
     app.cart.proceed_to_checkout()
 
-    # Step 11: Verify Address Details
-    delivery = app.checkout.delivery_address
-    billing = app.checkout.billing_address
-
-    assert delivery.is_visible()
-    assert billing.is_visible()
-
-    for address in [delivery, billing]:
-        assert new_user["firstname"] in address.inner_text()
-        assert new_user["lastname"] in address.inner_text()
-        assert new_user["address1"] in address.inner_text()
-        assert new_user["address2"] in address.inner_text()
-        assert new_user["city"] in address.inner_text()
-        assert new_user["state"] in address.inner_text()
-        assert new_user["zipcode"] in address.inner_text()
-        assert new_user["country"] in address.inner_text()
-        assert new_user["mobile_number"] in address.inner_text()
-
-    # Verify Review Your Order
-    assert app.checkout.order_review.is_visible()
-    assert product_name in app.checkout.order_review.inner_text()
+    # Step 11: Verify address details and order review
+    verify_address_and_review(app, new_user, product_name)
 
     # Steps 12–15: Place order, pay, and verify confirmation
     place_order_and_pay(app, card, "Test comment")

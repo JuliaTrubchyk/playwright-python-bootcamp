@@ -58,12 +58,26 @@ def add_first_product_from_home(app: App) -> str:
 
 
 def verify_address_and_review(app: App, user: dict, product_name: str) -> None:
-    """'Verify Address Details and Review Your Order'"""
-    delivery_text = app.checkout.delivery_address.inner_text()
-    for field in ("firstname", "lastname", "address1", "city", "country", "mobile_number"):
-        assert user[field] in delivery_text, f"Expected '{user[field]}' in delivery address"
-    order_text = app.checkout.order_review.inner_text()
-    assert product_name in order_text, f"Expected '{product_name}' in order review"
+    """Verify delivery/billing addresses and order review."""
+
+    for address_name, address in [
+        ("Delivery", app.checkout.delivery_address),
+        ("Billing", app.checkout.billing_address),
+    ]:
+        assert address.is_visible(), f"{address_name} address is not visible"
+
+        address_text = address.inner_text()
+
+        for field in (
+            "firstname", "lastname", "address1", "address2",
+            "city", "state", "zipcode", "country", "mobile_number"
+        ):
+            assert user[field] in address_text, (
+                f"{address_name} address: expected {field} = '{user[field]}'"
+            )
+
+    assert app.checkout.order_review.is_visible()
+    assert product_name in app.checkout.order_review.inner_text()
 
 
 def place_order_and_pay(
