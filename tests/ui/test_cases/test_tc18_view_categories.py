@@ -10,11 +10,11 @@ from tests.ui.test_cases.steps import verify_home_page_visible
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
 
 @pytest.mark.parametrize(
-    "category, subcategory,section_title",
+    "category, subcategory, section_title",
     [
         ("Women", "Dress", "Women - Dress Products"),
         ("Men", "Jeans", "Men - Jeans Products"),
-        ("Kids", "Dress","Kids - Dress Products")
+        ("Kids", "Dress", "Kids - Dress Products"),
     ],
 )
 def test_tc18_view_categories(app, category, subcategory, section_title):
