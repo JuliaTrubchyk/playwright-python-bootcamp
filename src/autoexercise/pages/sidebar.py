@@ -19,6 +19,9 @@ class Sidebar:
     def brand_links(self) -> Locator:
         return self.page.locator(".brands-name a")
 
+    def open_brand(self, name: str) -> None:
+        self.brand_links.filter(has_text=name).click()
+
     def open_category(self, name: str) -> None:
         """name: 'Women', 'Men' or 'Kids'."""
         self.page.locator(f'#accordian a[href="#{name}"]').click()
