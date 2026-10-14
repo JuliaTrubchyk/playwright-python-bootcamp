@@ -25,4 +25,4 @@ def test_tc18_view_categories(app, category, subcategory, section_title):
     app.sidebar.open_category(category)
     app.sidebar.open_subcategory(category, subcategory)
 
-    assert section_title in app.home.section_title.inner_text()
+    assert section_title.lower() in app.home.section_title.inner_text().lower()

@@ -1,4 +1,4 @@
-from playwright.sync_api import Locator
+from playwright.sync_api import Locator, expect
 
 from autoexercise.pages.base_page import BasePage
 
@@ -32,7 +32,10 @@ class CartPage(BasePage):
         return self.page.locator("#checkoutModal").get_by_role("link", name="Register / Login")
 
     def remove_first_item(self) -> None:
+        current_count = self.rows.count()
         self.page.locator(".cart_quantity_delete").first.click()
+        if current_count > 0:
+            expect(self.rows).to_have_count(current_count - 1)
 
     def proceed_to_checkout(self) -> None:
         self.page.get_by_text("Proceed To Checkout").click()
