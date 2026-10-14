@@ -7,11 +7,11 @@ See https://automationexercise.com/test_cases
 import pytest
 
 from tests.ui.test_cases.steps import (
+    delete_account_through_ui,
+    place_order_and_pay,
+    sign_up_through_ui,
     verify_home_page_visible,
     verify_logged_in_as,
-    sign_up_through_ui,
-    place_order_and_pay,
-    delete_account_through_ui
 )
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
