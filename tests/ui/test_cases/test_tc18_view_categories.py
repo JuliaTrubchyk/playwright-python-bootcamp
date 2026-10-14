@@ -9,13 +9,20 @@ from tests.ui.test_cases.steps import verify_home_page_visible
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
 
-
-def test_tc18_view_categories(app):
+@pytest.mark.parametrize(
+    "category, subcategory,section_title",
+    [
+        ("Women", "Dress", "Women - Dress Products"),
+        ("Men", "Jeans", "Men - Jeans Products"),
+        ("Kids", "Dress","Kids - Dress Products")
+    ],
+)
+def test_tc18_view_categories(app, category, subcategory, section_title):
     app.home.open()
     verify_home_page_visible(app)
 
     assert app.sidebar.categories_heading.is_visible()
-    app.sidebar.open_category("Women")
-    app.sidebar.open_subcategory("Women", "Tops")
+    app.sidebar.open_category(category)
+    app.sidebar.open_subcategory(category, subcategory)
 
-    assert "Women - Tops Products" in app.home.section_title.inner_text()
+    assert section_title in app.home.section_title.inner_text()
