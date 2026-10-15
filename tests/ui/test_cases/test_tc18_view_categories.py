@@ -13,8 +13,12 @@ pytestmark = [pytest.mark.ui, pytest.mark.testcases]
     "category, subcategory, section_title",
     [
         ("Women", "Dress", "Women - Dress Products"),
+        ("Women", "Tops", "Women - Tops Products"),
+        ("Women", "Saree", "Women - Saree Products"),
+        ("Men", "Tshirts", "Men - Tshirts Products"),
         ("Men", "Jeans", "Men - Jeans Products"),
         ("Kids", "Dress", "Kids - Dress Products"),
+        ("Kids", "Tops & Shirts", "Kids - Tops & Shirts Products")
     ],
 )
 def test_tc18_view_categories(app, category, subcategory, section_title):
