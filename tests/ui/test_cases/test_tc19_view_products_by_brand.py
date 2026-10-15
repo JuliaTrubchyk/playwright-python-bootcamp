@@ -9,7 +9,20 @@ from tests.ui.test_cases.steps import verify_home_page_visible
 
 pytestmark = [pytest.mark.ui, pytest.mark.testcases]
 
-def test_tc19_view_products_by_brand(app):
+@pytest.mark.parametrize(
+    "brand, section_title",
+    [
+        ("Polo", "Brand - Polo Products"),
+        ("H&M", "Brand - H&M Products"),
+        ("Madame", "Brand - Madame Products"),
+        ("Mast & Harbour", "Brand - Mast & Harbour Products"),
+        ("Babyhug", "Brand - Babyhug Products"),
+        ("Allen Solly Junior", "Brand - Allen Solly Junior Products"),
+        ("Kookie Kids", "Brand - Kookie Kids Products"),
+        ("Biba", "Brand - Biba Products")
+    ],
+)
+def test_tc19_view_products_by_brand(app, brand, section_title):
     app.home.open()
     verify_home_page_visible(app)
 
@@ -17,5 +30,5 @@ def test_tc19_view_products_by_brand(app):
 
     assert app.sidebar.brands_heading.is_visible()
 
-    app.sidebar.open_brand("Polo")
-    assert "Brand - Polo Products".lower() in app.home.section_title.inner_text().lower()
+    app.sidebar.open_brand(brand)
+    assert section_title in app.home.section_title.inner_text()
