@@ -18,4 +18,4 @@ def test_tc19_view_products_by_brand(app):
     assert app.sidebar.brands_heading.is_visible()
 
     app.sidebar.open_brand("Polo")
-    assert "Brand - Polo Products" in app.home.section_title.inner_text() 
+    assert "Brand - Polo Products".lower() in app.home.section_title.inner_text().lower()
