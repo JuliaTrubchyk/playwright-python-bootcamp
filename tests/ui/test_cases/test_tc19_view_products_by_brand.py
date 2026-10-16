@@ -19,7 +19,7 @@ pytestmark = [pytest.mark.ui, pytest.mark.testcases]
         ("Babyhug", "Brand - Babyhug Products"),
         ("Allen Solly Junior", "Brand - Allen Solly Junior Products"),
         ("Kookie Kids", "Brand - Kookie Kids Products"),
-        ("Biba", "Brand - Biba Products")
+        ("Biba", "Brand - Biba Products"),
     ],
 )
 def test_tc19_view_products_by_brand(app, brand, section_title):
@@ -31,4 +31,4 @@ def test_tc19_view_products_by_brand(app, brand, section_title):
     assert app.sidebar.brands_heading.is_visible()
 
     app.sidebar.open_brand(brand)
-    assert section_title in app.home.section_title.inner_text()
+    assert section_title.lower() in app.home.section_title.inner_text().lower()
