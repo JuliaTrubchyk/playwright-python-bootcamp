@@ -6,6 +6,8 @@ https://automationexercise.com/test_cases
 
 import re
 
+from playwright.sync_api import expect
+
 from autoexercise.pages.app import App
 
 
@@ -64,20 +66,19 @@ def verify_address_and_review(app: App, user: dict, product_name: str) -> None:
         ("Delivery", app.checkout.delivery_address),
         ("Billing", app.checkout.billing_address),
     ]:
-        assert address.is_visible(), f"{address_name} address is not visible"
-
-        address_text = address.inner_text()
+        expect(address).to_be_visible(timeout=15000)
 
         for field in (
             "firstname", "lastname", "address1", "address2",
             "city", "state", "zipcode", "country", "mobile_number"
         ):
-            assert user[field] in address_text, (
-                f"{address_name} address: expected {field} = '{user[field]}'"
-            )
+            expect(address).to_contain_text(
+                user[field],
+                timeout=15000,
+            ), f"{address_name} address: expected {field} = '{user[field]}'"
 
-    assert app.checkout.order_review.is_visible()
-    assert product_name in app.checkout.order_review.inner_text()
+    expect(app.checkout.order_review).to_be_visible(timeout=15000)
+    expect(app.checkout.order_review).to_contain_text(product_name, timeout=15000)
 
 
 def place_order_and_pay(
